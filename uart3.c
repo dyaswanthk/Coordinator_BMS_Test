@@ -19,7 +19,7 @@ typedef enum{
 uart_status_t uart3_status = uart_idle;
 
 /*
-uart3 gpio pins are PC10(USART_TX), PC11(USART_RX)
+uart3 gpio pins are PB10(USART_TX), PB11(USART_RX)
 uart3_dma_init() function configures DMA for uart3
 DMA1 Stream3 channel 4 is configured enable the data in uart3_tx[] to be transferred through uart3
 DMA1 Stream1 channel 4 is configured to transfer the received data from uart3 to uart3_rx[]
