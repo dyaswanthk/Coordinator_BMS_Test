@@ -5,11 +5,11 @@
 #include "bms.h"
 #include <string.h>
 #include <cross_studio_io.h>
-char t[] ="hello";
+
 
 
 int main(void)
-{
+ {
    clock_init();
    uart3_init(XFER_BUFFER_LENGTH);
    bmsinit();
@@ -19,7 +19,7 @@ int main(void)
     uart3_receive();
     if (uart3_rxFlag)
     {
-      memcpy(bmsData.rxBuffer, uart3_rx, XFER_BUFFER_LENGTH );
+      //memcpy(bmsData.rxBuffer, uart3_rx, XFER_BUFFER_LENGTH );
       bmsProcessResponse(bmsData.rxBuffer, XFER_BUFFER_LENGTH );
       //for(uint8_t i=0;i<XFER_BUFFER_LENGTH;i++)
       //{
@@ -33,23 +33,16 @@ int main(void)
 }
 
 
-//CC1IF
 void TIM2_IRQHandler(void)
 {
    if(TIM2->SR & TIM_SR_UIF)
- {
-   TIM2->SR &= ~TIM_SR_UIF;
-  }
-  tx_enable();
-//uart3_send(t,sizeof(t));
-//Send from here
-  bmsCreateTxPacket();  
-  uart3_send(bmsData.txBuffer, XFER_BUFFER_LENGTH);
-  //for(uint8_t i=0;i<XFER_BUFFER_LENGTH;i++)
-  //{
-  // debug_printf("%2x",bmsData.txBuffer[i]);
-  //}
-  //debug_printf("\n");
+   {
+     TIM2->SR &= ~TIM_SR_UIF;
+     //Send from here
+      bmsCreateTxPacket();
+      tx_enable();  
+      uart3_send(bmsData.txBuffer, XFER_BUFFER_LENGTH);
+   }
 }
 
 void USART3_IRQHandler(void)
@@ -57,11 +50,8 @@ void USART3_IRQHandler(void)
     // Transmit complete
     if (USART3->SR & USART_SR_TC)
     {
-        
-        USART3->SR &= ~USART_SR_TC;          // Clear TC flag
-//        USART3->CR1 &= ~USART_CR1_TCIE;      // Disable TC interrupt
-        rx_enable();
-
+        USART3->SR &= ~USART_SR_TC;          // Clear TC flag 
     }
+    rx_enable();
+    
 }
-//rx_enable();

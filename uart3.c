@@ -1,5 +1,6 @@
 
   #include "uart3.h"
+  #include "bms.h"
   #include <stdint.h>
   #include <string.h>
 
@@ -8,6 +9,7 @@
   uint8_t uart3_tx[UART_BUFFER_TX3_SIZE];
   uint8_t uart3_rx[UART_BUFFER_RX3_SIZE];
   uint8_t uart3_rxFlag;
+
 
 
   uart_status_t uart3_status = uart_idle;
@@ -39,8 +41,8 @@
       GPIOD->MODER |= (0b01<<GPIO_MODER_MODE11_Pos);
       GPIOD->MODER &= ~GPIO_MODER_MODE10;     //PD10-Driver enable pin
       GPIOD->MODER |= (0b01<<GPIO_MODER_MODE10_Pos);
-      GPIOD->BSRR |= GPIO_BSRR_BS11;
-      GPIOD->BSRR |= GPIO_BSRR_BR10;
+      //GPIOD->BSRR |= GPIO_BSRR_BS11;
+      //GPIOD->BSRR |= GPIO_BSRR_BR10;
 
   }
 
@@ -52,24 +54,21 @@
       //DMA1_Stream3->NDTR = size;
 
       DMA1_Stream3->PAR = (uint32_t)&(USART3->DR);
-      DMA1_Stream3->M0AR = (uint32_t)&(uart3_tx[0]);
+      //DMA1_Stream3->M0AR = (uint32_t)&(uart3_tx[0]);
 
       DMA1_Stream3->CR |= DMA_SxCR_MINC;
       DMA1_Stream3->CR &= ~DMA_SxCR_DIR;
       DMA1_Stream3->CR |= (0b01<<DMA_SxCR_DIR_Pos); // Memory to Peripheral
-
-      DMA1_Stream3->FCR = 0;
 
       DMA1_Stream1->CR &= ~DMA_SxCR_CHSEL;            // DMA1-stream1-channel4 corresponds to USART3_RX
       DMA1_Stream1->CR |= (0b100<<DMA_SxCR_CHSEL_Pos);
       DMA1_Stream1->NDTR = size;
 
       DMA1_Stream1->PAR = (uint32_t)&(USART3->DR);
-      DMA1_Stream1->M0AR = (uint32_t)&(uart3_rx[0]);
+      DMA1_Stream1->M0AR = (uint32_t)&(bmsData.rxBuffer[0]);
 
       DMA1_Stream1->CR |= DMA_SxCR_MINC;
       DMA1_Stream1->CR &= ~DMA_SxCR_DIR; // Pheripheral to Memory
-      DMA1_Stream1->FCR = 0;
       DMA1_Stream1->CR |= DMA_SxCR_EN;
 
   }
@@ -100,10 +99,11 @@
       USART3->CR1 &= ~USART_CR1_M;    // 1 Start bit, 8 Data bits, n Stop bit
       USART3->CR1 &= ~USART_CR1_PCE;   // Partity bit disable
 
+      USART3->CR1 |= USART_CR1_UE;    // USART enabled
       USART3->CR1 |= USART_CR1_TE;    // Transmitter is enabled
       USART3->CR1 |= USART_CR1_RE;    // Receiver is enabled and begins searching for a start bit
 
-      USART3->CR1 |= USART_CR1_UE;    // USART enabled
+      
       uart3_gpio_init();
 
       uart3_dma_init(size);
@@ -113,10 +113,8 @@
       USART3->CR1 |= USART_CR1_TCIE; // Transfer Complete Interrupt enabled
 
       NVIC_EnableIRQ(USART3_IRQn);
+      NVIC_SetPriority(USART3_IRQn,2);
   }
-
-
-
 
 
   void uart3_send(uint8_t* data, uint8_t size)
@@ -141,8 +139,6 @@
       
       
   }
-
-
 
 
   void uart3_receive(void)

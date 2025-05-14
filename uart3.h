@@ -25,6 +25,5 @@ void tx_enable(void);
     uart_busy
   } uart_status_t;
 
-
 #endif
  

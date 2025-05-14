@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "stm32f4xx.h"
 #include "uart3.h"
-#define XFER_BUFFER_LENGTH 15
+#define XFER_BUFFER_LENGTH 13
 #define MIN_NUMBER_CELLS 1
 #define MAX_NUMBER_CELLS 6
 #define MIN_NUMBER_TEMP 1

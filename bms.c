@@ -36,7 +36,7 @@ void bmsCreateCommand(int cmdID) {
     bmsData.txBuffer[2] = cmdID;
     uint8_t checksum = 0;
     // Calculate checksum
-    for (int i = 0; i < XFER_BUFFER_LENGTH - 1; i++) {
+    for (int i = 0; i < XFER_BUFFER_LENGTH - 2; i++) {
         checksum += bmsData.txBuffer[i];
     }
     bmsData.txBuffer[XFER_BUFFER_LENGTH - 1] = checksum;

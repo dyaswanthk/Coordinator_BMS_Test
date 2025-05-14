@@ -7,5 +7,6 @@
 #define ISR_FREQ 10
 
 void timer2_init(void);
+void timer_gpio_init(void);
 
 #endif

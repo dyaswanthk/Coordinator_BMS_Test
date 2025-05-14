@@ -1,5 +1,5 @@
-uart3_bms\ THUMB\ Debug/timer.o: D:\Yaswanth\BMS\uart3_bms\timer.c \
- D:\Yaswanth\BMS\uart3_bms\timer.h \
+uart3_bms\ THUMB\ Debug/timer.o: D:\Yaswanth\uart3_bms\timer.c \
+ D:\Yaswanth\uart3_bms\timer.h \
  C:/Users/admin/AppData/Local/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM/v4/packages/targets/STM32/include/stm32f4xx.h \
  C:/Users/admin/AppData/Local/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM/v4/packages/targets/STM32/include/stm32f427xx.h \
  C:/Users/admin/AppData/Local/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM/v4/packages/CMSIS_5/CMSIS/Core/Include/core_cm4.h \
@@ -9,4 +9,4 @@ uart3_bms\ THUMB\ Debug/timer.o: D:\Yaswanth\BMS\uart3_bms\timer.c \
  C:/Users/admin/AppData/Local/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM/v4/packages/CMSIS_5/CMSIS/Core/Include/cmsis_gcc.h \
  C:/Users/admin/AppData/Local/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM/v4/packages/CMSIS_5/CMSIS/Core/Include/mpu_armv7.h \
  C:/Users/admin/AppData/Local/Rowley\ Associates\ Limited/CrossWorks\ for\ ARM/v4/packages/targets/STM32/include/system_stm32f4xx.h \
- D:\Yaswanth\BMS\uart3_bms\clock_init.h
+ D:\Yaswanth\uart3_bms\clock_init.h
